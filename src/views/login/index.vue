@@ -4,7 +4,7 @@
       <div class="login-title">
         <img src="../../assets/img/logo_index.png" alt />
       </div>
-      <el-form style="padding: 20px 20px 0" :model="loginForm" :rules="loginRules">
+      <el-form ref="loginForm" style="padding: 20px 20px 0" :model="loginForm" :rules="loginRules">
         <el-form-item prop="mobile">
           <el-input v-model="loginForm.mobile"></el-input>
         </el-form-item>
@@ -58,27 +58,34 @@ export default {
   },
   methods: {
     userLogin () {
-      this.$axios({
-        url: '/authorizations',
-        method: 'post',
-        data: this.loginForm
-      })
-        .then(res => {
-          if (res.status === 201) {
-            localStorage.setItem('token', res.data.data.token)
-            this.$router.push('/')
-          }
-          console.log(res)
-        })
-        .catch(err => {
-          // console.log(err)
-          if (err) {
-            this.$message({
-              message: '手机或验证码错误,请重新输入',
-              type: 'warning'
+      this.$refs.loginForm.validate(isOk => {
+        if (isOk) {
+          this.$axios({
+            url: '/authorizations',
+            method: 'post',
+            data: this.loginForm
+          })
+            .then(res => {
+              if (res.status === 201) {
+                console.log(res)
+                localStorage.setItem('token', res.data.data.token)
+                this.$router.push('/')
+              }
+              console.log(res)
             })
-          }
-        })
+            .catch(err => {
+              // console.log(err)
+              if (err) {
+                this.$message({
+                  message: '手机或验证码错误,请重新输入',
+                  type: 'warning'
+                })
+              }
+            })
+        } else {
+          this.$message({ message: '请填入正确的信息', type: 'warning' })
+        }
+      })
     }
   }
 }
