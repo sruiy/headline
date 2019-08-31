@@ -20,7 +20,7 @@
           </el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width:100%">登录</el-button>
+          <el-button type="primary" style="width:100%" @click="userLogin">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -54,6 +54,31 @@ export default {
         ],
         checked: [{ validator }]
       }
+    }
+  },
+  methods: {
+    userLogin () {
+      this.$axios({
+        url: '/authorizations',
+        method: 'post',
+        data: this.loginForm
+      })
+        .then(res => {
+          if (res.status === 201) {
+            localStorage.setItem('token', res.data.data.token)
+            this.$router.push('/')
+          }
+          console.log(res)
+        })
+        .catch(err => {
+          // console.log(err)
+          if (err) {
+            this.$message({
+              message: '手机或验证码错误,请重新输入',
+              type: 'warning'
+            })
+          }
+        })
     }
   }
 }
