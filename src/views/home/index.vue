@@ -15,16 +15,13 @@
 </template>
 
 <script>
-import homeAside from '../../components/home/aside'
-import homeHeadr from '../../components/home/header'
 export default {
 
-  components: {
-    'home-aside': homeAside,
-    'home-header': homeHeadr
-  }
 }
 </script>
 
 <style lang="less" scoped>
+.el-header {
+  padding-right: 0;
+}
 </style>
