@@ -9,15 +9,15 @@
     <el-col :span="4" class="header-right">
       <div class="grid-content bg-purple">
         <img :src="userData.photo ? userData.photo : defaultImg" alt />
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" @command="handleCommandUser">
           <span class="el-dropdown-link">
             {{userData.name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人信息</el-dropdown-item>
-            <el-dropdown-item>git地址</el-dropdown-item>
-            <el-dropdown-item divided>退出</el-dropdown-item>
+            <el-dropdown-item command="account">个人信息</el-dropdown-item>
+            <el-dropdown-item command="git">git地址</el-dropdown-item>
+            <el-dropdown-item command="logout" divided>退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -52,6 +52,15 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    handleCommandUser (command) {
+      if (command === 'account') {
+      } else if (command === 'git') {
+        window.location.href = 'https://github.com/sruiy'
+      } else {
+        window.localStorage.clear('token')
+        this.$router.push('/login')
+      }
     }
   },
   created () {
