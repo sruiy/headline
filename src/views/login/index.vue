@@ -6,10 +6,10 @@
       </div>
       <el-form ref="loginForm" style="padding: 20px 20px 0" :model="loginForm" :rules="loginRules">
         <el-form-item prop="mobile">
-          <el-input v-model="loginForm.mobile"></el-input>
+          <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
         <el-form-item prop="code">
-          <el-input style="width: 200px" v-model="loginForm.code"></el-input>
+          <el-input style="width: 200px" v-model="loginForm.code" placeholder="请输入验证码"></el-input>
           <el-button style="float:right">发送验证码</el-button>
         </el-form-item>
         <el-form-item prop="checked">
@@ -34,7 +34,7 @@ export default {
       if (value) {
         callback()
       } else {
-        callback(new Error('必须同意规约才能登陆'))
+        callback(new Error('必须同意规约才能登录'))
       }
     }
     return {
