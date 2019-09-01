@@ -6,12 +6,12 @@
         江苏传智播客教育科技股份有限公司
       </div>
     </el-col>
-    <el-col :span="3" class="header-right">
+    <el-col :span="4" class="header-right">
       <div class="grid-content bg-purple">
-        <img src="../../assets/img/avatar.jpg" alt />
+        <img :src="userData.photo ? userData.photo : defaultImg" alt />
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
-            用户名
+            {{userData.name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -26,7 +26,38 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      userData: {
+        name: '',
+        photo: ''
+      },
+      defaultImg: require('../../assets/img/avatar.jpg')
+    }
+  },
+  methods: {
+    getUser () {
+      let token = window.localStorage.getItem('token')
+      //   console.log(token)
+      this.$axios({
+        url: '/user/profile',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(res => {
+          this.userData = res.data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  created () {
+    this.getUser()
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -39,7 +70,7 @@ export default {}
   }
 }
 .header-right {
-    margin-top: 5px;
+  margin-top: 5px;
   img {
     width: 40px;
     height: 40px;
