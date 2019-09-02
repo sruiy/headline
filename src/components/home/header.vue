@@ -47,7 +47,7 @@ export default {
         // }
       })
         .then(res => {
-          this.userData = res.data.data
+          this.userData = res.data
         })
         .catch(err => {
           console.log(err)

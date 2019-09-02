@@ -5,7 +5,14 @@ axios.interceptors.request.use(function (config) {
   return config
 //   debugger
 }, function (err) {
-  console.log(err)
+  return Promise.reject(err)
 })
 
+// 统一处理响应头
+axios.interceptors.response.use(function (config) {
+//   debugger
+  return config.data
+}, function (err) {
+  return Promise.reject(err)
+})
 export default axios

@@ -66,12 +66,10 @@ export default {
             data: this.loginForm
           })
             .then(res => {
-              if (res.status === 201) {
-                console.log(res)
-                localStorage.setItem('token', res.data.data.token)
-                this.$router.push('/')
-              }
-              console.log(res)
+              // console.log(res)
+              localStorage.setItem('token', res.data.token)
+              this.$router.push('/')
+              // console.log(res)
             })
             .catch(err => {
               console.log(err)
