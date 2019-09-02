@@ -7,10 +7,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from './interceptors'
 import Main from './components/main.vue'
 Vue.use(Main)
-Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+Vue.use(axios)
+// Vue.prototype.$axios = axios
 Vue.use(elementUi)
-
 Vue.config.productionTip = false
 
 new Vue({

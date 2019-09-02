@@ -49,9 +49,9 @@ export default {
         .then(res => {
           this.userData = res.data
         })
-        .catch(err => {
-          console.log(err)
-        })
+        // .catch(err => {
+        //   console.log(err)
+        // })
     },
     handleCommandUser (command) {
       if (command === 'account') {

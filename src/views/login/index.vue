@@ -71,15 +71,15 @@ export default {
               this.$router.push('/')
               // console.log(res)
             })
-            .catch(err => {
-              console.log(err)
-              if (err) {
-                this.$message({
-                  message: '手机或验证码错误,请重新输入',
-                  type: 'warning'
-                })
-              }
-            })
+            // .catch(err => {
+            //   console.log(err)
+            //   if (err) {
+            //     this.$message({
+            //       message: '手机或验证码错误,请重新输入',
+            //       type: 'warning'
+            //     })
+            //   }
+            // })
         } else {
           this.$message({ message: '请填入正确的信息', type: 'warning' })
         }
