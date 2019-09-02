@@ -5,7 +5,7 @@ router.beforeEach((to, from, next) => {
     if (token) {
       next()
     } else {
-      router.push('/login')
+      next('/login')
     }
   } else {
     next()

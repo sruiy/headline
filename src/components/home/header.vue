@@ -38,13 +38,13 @@ export default {
   },
   methods: {
     getUser () {
-      let token = window.localStorage.getItem('token')
+      // let token = window.localStorage.getItem('token')
       //   console.log(token)
       this.$axios({
-        url: '/user/profile',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        url: '/user/profile'
+        // headers: {
+        //   Authorization: `Bearer ${token}`
+        // }
       })
         .then(res => {
           this.userData = res.data.data

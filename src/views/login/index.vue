@@ -74,7 +74,7 @@ export default {
               console.log(res)
             })
             .catch(err => {
-              // console.log(err)
+              console.log(err)
               if (err) {
                 this.$message({
                   message: '手机或验证码错误,请重新输入',

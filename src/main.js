@@ -4,7 +4,7 @@ import router from './beforeRouter'
 import elementUi from 'element-ui'
 import './style/index.less'
 import 'element-ui/lib/theme-chalk/index.css'
-import axios from 'axios'
+import axios from './interceptors'
 import Main from './components/main.vue'
 Vue.use(Main)
 Vue.prototype.$axios = axios
