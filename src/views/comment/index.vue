@@ -22,7 +22,7 @@
     <el-row type="flex" justify="center" style="margin:30px">
       <el-pagination
         @current-change="currentChange"
-        :page="this.page.page"
+        :current-page="this.page.page"
         :page-size="this.page.pageSize"
         :total="this.page.total"
         background
