@@ -18,7 +18,7 @@ axios.interceptors.response.use(function (config) {
   // 有data就返回data,没有就返回一个空对象(?)
   return config.data ? config.data : {} // config
 }, function (err) {
-  //   debugger
+  // debugger
   let status = err.response.status
   let message = ''
   switch (status) {
