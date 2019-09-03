@@ -19,6 +19,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row type="flex" justify="center" style="margin:30px">
+      <el-pagination
+        @current-change="currentChange"
+        :page="this.page.page"
+        :page-size="this.page.pageSize"
+        :total="this.page.total"
+        background
+        layout="prev, pager, next"
+      ></el-pagination>
+    </el-row>
   </el-card>
 </template>
 
@@ -26,12 +36,21 @@
 export default {
   data () {
     return {
-      commentData: []
+      commentData: [],
+      page: {
+        page: 1,
+        pageSize: 10,
+        total: 0
+      }
     }
   },
   methods: {
+    currentChange (newPage) {
+      this.page.page = newPage
+      this.getComment()
+    },
     changeStatus (row) {
-    //   console.log(row)
+      //   console.log(row)
       let msg = row.comment_status ? '关闭' : '打开'
       this.$confirm(`此操作将${msg}评论, 是否继续?`, '提示', {
         type: 'warning'
@@ -57,9 +76,10 @@ export default {
     getComment () {
       this.$axios({
         url: '/articles',
-        params: { response_type: 'comment' }
+        params: { response_type: 'comment', page: this.page.page, per_page: this.page.pageSize }
       }).then(res => {
-        // console.log(res)
+        console.log(res)
+        this.page.total = res.data.total_count
         this.commentData = res.data.results
       })
     }
