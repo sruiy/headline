@@ -45,7 +45,7 @@ axios.interceptors.response.use(function (config) {
   }
   Message.warning(message)
 
-  return new Promise(function () {}) // 返回一个promise对象表示错误处理完
+  return new Promise(function () {}) // 返回一个promise对象表示错误处理完,不能返回promise.rejected 因为还是会把错误返出去
 })
 // export default axios
 export default {

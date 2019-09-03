@@ -5,7 +5,7 @@ import elementUi from 'element-ui'
 import './style/index.less'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from './interceptors'
-import Main from './components/main.vue'
+import Main from './components/components.vue'
 Vue.use(Main)
 Vue.use(axios)
 // Vue.prototype.$axios = axios

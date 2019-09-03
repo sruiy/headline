@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from './views/login'
 import Home from './views/home'
 import homeMain from './views/home/homemain.vue'
+import Comment from './views/comment'
 
 Vue.use(Router)
 
@@ -20,10 +21,10 @@ export default new Router({
       path: '/home',
       component: Home,
       children: [
-        { path: '', component: homeMain }
+        { path: '', component: homeMain },
         // { path: 'publish', component: homeMain },
         // { path: 'articles', component: homeMain },
-        // { path: 'comment', component: homeMain },
+        { path: 'comment', component: Comment }
         // { path: 'material', component: homeMain },
         // { path: 'fansdata', component: homeMain },
         // { path: 'fansinfo', component: homeMain },
