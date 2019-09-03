@@ -8,7 +8,12 @@
       <el-table-column :formatter="formatter" prop="comment_status" label="评论状态"></el-table-column>
       <el-table-column prop="total_comment_count" label="总评论数"></el-table-column>
       <el-table-column prop="fans_comment_count" label="粉丝评论数"></el-table-column>
-      <el-table-column prop="address" label="操作"></el-table-column>
+      <el-table-column prop="address" label="操作">
+        <template slot-scope="obj">
+          <el-button size="mini" type="text">修改</el-button>
+          <el-button size="mini" type="text">{{obj.row.comment_status?'关闭评论':'打开评论'}}</el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </el-card>
 </template>
@@ -22,7 +27,7 @@ export default {
   },
   methods: {
     formatter (row) {
-    //   console.log(row.comment_status)
+      //   console.log(row.comment_status)
       return row.comment_status ? '正常' : '关闭'
     },
     getComment () {
