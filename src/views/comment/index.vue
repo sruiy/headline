@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card v-loading="loading">
     <bread-crumb slot="header">
       <template slot="title">评论管理</template>
     </bread-crumb>
@@ -36,6 +36,7 @@
 export default {
   data () {
     return {
+      loading: false,
       commentData: [],
       page: {
         page: 1,
@@ -74,10 +75,12 @@ export default {
       return row.comment_status ? '正常' : '关闭'
     },
     getComment () {
+      this.loading = true
       this.$axios({
         url: '/articles',
         params: { response_type: 'comment', page: this.page.page, per_page: this.page.pageSize }
       }).then(res => {
+        this.loading = false
         console.log(res)
         this.page.total = res.data.total_count
         this.commentData = res.data.results
