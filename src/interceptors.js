@@ -16,7 +16,7 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (config) {
   //   debugger
   // 有data就返回data,没有就返回一个空对象(?)
-  return config.data ? config.data : {}
+  return config.data ? config.data : {} // config
 }, function (err) {
   //   debugger
   let status = err.response.status
@@ -44,8 +44,8 @@ axios.interceptors.response.use(function (config) {
       break
   }
   Message.warning(message)
-  return Promise.reject(err)
-//   return new Promise(function () {}) // 返回一个promise对象表示错误处理完后
+  //   return Promise.reject()
+  return new Promise(function () {}) // 返回一个promise对象表示错误处理完后
 })
 // export default axios
 export default {
