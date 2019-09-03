@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     changeStatus (row) {
-    //   console.log(obj)
+    //   console.log(row)
       let msg = row.comment_status ? '关闭' : '打开'
       this.$confirm(`此操作将${msg}评论, 是否继续?`, '提示', {
         type: 'warning'
@@ -39,9 +39,13 @@ export default {
         this.$axios({
           url: '/comments/status',
           method: 'put',
-          params: { 'article_id': row.id },
-          data: { 'allow_comment': !row.comment_status }
+          params: { article_id: row.id.toString() },
+          data: { allow_comment: !row.comment_status }
         }).then(res => {
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
           this.getComment()
         })
       })
@@ -55,7 +59,7 @@ export default {
         url: '/articles',
         params: { response_type: 'comment' }
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         this.commentData = res.data.results
       })
     }

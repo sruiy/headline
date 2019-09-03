@@ -1,7 +1,17 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import {
+  Message
+} from 'element-ui'
 import router from './beforeRouter'
+import JsonBigInt from 'json-bigint'
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+
+axios.defaults.transformResponse = [
+  function (data) {
+    // 对 data 进行任意转换处理
+    return JsonBigInt.parse(data)
+  }
+]
 
 axios.interceptors.request.use(function (config) {
   let token = window.localStorage.getItem('token')
