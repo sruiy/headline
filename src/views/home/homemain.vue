@@ -8,7 +8,7 @@ export default {}
 
 <style lang="less" scoped>
 .main {
-    background-image: url('../../../assets/img/home.jpg');
+    background-image: url('../../assets/img/home.jpg');
     height:100vh;
     background-size: cover;
 }
