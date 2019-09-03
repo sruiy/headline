@@ -1,7 +1,7 @@
 <template>
   <el-card v-loading="loading">
     <bread-crumb slot="header">
-      <template slot="title">评论管理</template>
+      <template slot="title">评论列表</template>
     </bread-crumb>
     <el-table :data="commentData" style="width: 100%">
       <el-table-column prop="title" label="标题" width="400"></el-table-column>
