@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import Login from './views/login'
 import Home from './views/home'
 import homeMain from './views/home/homemain.vue'
-import Comment from './views/comment'
-import Material from './views/material'
+// import Comment from './views/comment'
+// import Material from './views/material'
 
 Vue.use(Router)
 
@@ -25,8 +25,8 @@ export default new Router({
         { path: '', component: homeMain },
         // { path: 'publish', component: homeMain },
         // { path: 'articles', component: homeMain },
-        { path: 'comment', component: Comment },
-        { path: 'material', component: Material }
+        { path: 'comment', component: () => import('./views/comment') },
+        { path: 'material', component: () => import('./views/material') }
         // { path: 'fansdata', component: homeMain },
         // { path: 'fansinfo', component: homeMain },
         // { path: 'fansimg', component: homeMain },

@@ -9,7 +9,7 @@ axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 axios.defaults.transformResponse = [
   function (data) {
     // 对 data 进行任意转换处理
-    return JsonBigInt.parse(data)
+    return data ? JsonBigInt.parse(data) : {} // delete接口返回的是空,所以转成json会报错,需要判断处理一下
   }
 ]
 
