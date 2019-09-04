@@ -4,19 +4,24 @@
       <template slot="title">内容列表</template>
     </bread-crumb>
     <el-form ref="form" :model="formData" label-width="80px">
-      {{formData}}
+      <!-- {{formData}} -->
       <el-form-item label="文章状态">
-        <el-radio v-model="formData.radio" label="5">全部</el-radio>
-        <el-radio v-model="formData.radio" label="5">草稿</el-radio>
-        <el-radio v-model="formData.radio" label="5">待审核</el-radio>
-        <el-radio v-model="formData.radio" label="5">审核通过</el-radio>
-        <el-radio v-model="formData.radio" label="5">审核失败</el-radio>
+        <el-radio-group @change="searchArticles" v-model="formData.radio">
+          <el-radio label="5">全部</el-radio>
+          <el-radio label="0">草稿</el-radio>
+          <el-radio label="1">待审核</el-radio>
+          <el-radio label="2">审核通过</el-radio>
+          <el-radio label="3">审核失败</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="频道列表">
-        <el-select v-model="formData.value" placeholder="请选择"></el-select>
+        <el-select v-model="formData.value" placeholder="请选择" @change="searchArticles">
+          <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="时间选择">
         <el-date-picker
+          @change="searchArticles"
           v-model="formData.datePicker"
           type="daterange"
           start-placeholder="开始日期"
@@ -31,7 +36,11 @@
         <img :src="item.cover.images[0]?item.cover.images[0]:imgSrc" alt />
         <div class="img-right">
           <span>{{item.title}}</span>
-          <el-tag size="small" :type="item.status | tagColor" style="width:60px;text-align:center;font-size:12px">{{ item.status | articleStatus}}</el-tag>
+          <el-tag
+            size="small"
+            :type="item.status | tagColor"
+            style="width:60px;text-align:center;font-size:12px"
+          >{{ item.status | articleStatus}}</el-tag>
           <span class="date">{{item.pubdate}}</span>
         </div>
       </div>
@@ -56,11 +65,34 @@ export default {
       formData: {
         radio: '5',
         datePicker: [],
-        value: null
-      }
+        value: ''
+      },
+      channels: []
     }
   },
   methods: {
+    searchArticles () {
+      let params = {
+        channel_id: this.formData.value ? this.formData.value : null,
+        status: this.formData.radio === '5' ? null : this.formData.radio,
+        begin_pubdate:
+          this.formData.datePicker.length > 0
+            ? this.formData.datePicker[0]
+            : null,
+        end_pubdate:
+          this.formData.datePicker.length > 1
+            ? this.formData.datePicker[1]
+            : null
+      }
+      this.getArticles(params)
+    },
+    getChannels () {
+      this.$axios({
+        url: '/channels'
+      }).then(res => {
+        this.channels = res.data.channels
+      })
+    },
     getArticles (params) {
       this.$axios({
         url: '/articles',
@@ -73,6 +105,7 @@ export default {
   },
   created () {
     this.getArticles()
+    this.getChannels()
   },
   filters: {
     articleStatus (value) {
@@ -99,7 +132,6 @@ export default {
           return 'danger'
       }
     }
-
   }
 }
 
