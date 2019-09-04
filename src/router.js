@@ -24,7 +24,7 @@ export default new Router({
       children: [
         { path: '', component: homeMain },
         // { path: 'publish', component: homeMain },
-        // { path: 'articles', component: homeMain },
+        { path: 'articles', component: () => import('./views/articles') },
         { path: 'comment', component: () => import('./views/comment') },
         { path: 'material', component: () => import('./views/material') }
         // { path: 'fansdata', component: homeMain },

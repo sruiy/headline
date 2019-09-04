@@ -15,7 +15,7 @@
             size="mini"
             type="text"
             @click="changeStatus(obj.row)"
-          >{{obj.row.comment_status?'关闭评论':'打开评论'}}</el-button>
+          :style="{color:obj.row.comment_status? '#E6A23C': ''}">{{obj.row.comment_status?'关闭评论':'打开评论'}}</el-button>
         </template>
       </el-table-column>
     </el-table>
