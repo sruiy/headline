@@ -58,7 +58,14 @@
     </div>
     <!--分页-->
     <el-row type="flex" justify="center" style="margin-top: 20px">
-      <el-pagination :current-page="page.page" :page-size="page.pageSize" :total="page.total" background layout="prev, pager, next" @current-change="currentChange"></el-pagination>
+      <el-pagination
+        :current-page="page.page"
+        :page-size="page.pageSize"
+        :total="page.total"
+        background
+        layout="prev, pager, next"
+        @current-change="currentChange"
+      ></el-pagination>
     </el-row>
   </el-card>
 </template>
@@ -85,9 +92,15 @@ export default {
   methods: {
     // 删除
     deleArticle (id) {
-      this.$confirm('确定要删除这篇文章吗?', '提示').then(
-
-      )
+      this.$confirm('确定要删除这篇文章吗?', '提示').then(() => {
+        this.$axios({
+          url: `/articles/${id}`,
+          method: 'delete'
+        }).then(res => {
+          this.$message({ type: 'success', message: '删除成功' })
+          this.requestParams()
+        })
+      })
     },
     // 分页
     currentChange (pageNew) {
