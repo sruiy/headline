@@ -23,7 +23,7 @@ export default new Router({
       component: Home,
       children: [
         { path: '', component: homeMain },
-        // { path: 'publish', component: homeMain },
+        { path: 'publish', component: () => import('./views/pubilsh') },
         { path: 'articles', component: () => import('./views/articles') },
         { path: 'comment', component: () => import('./views/comment') },
         { path: 'material', component: () => import('./views/material') }
