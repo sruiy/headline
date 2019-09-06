@@ -7,10 +7,10 @@
       <el-form-item label="标题" prop="title">
         <el-input style="width:400px" v-model="formData.title"></el-input>
       </el-form-item>
-      <el-form-item label="内容" prop="content">
-        <el-input v-model="formData.content" style="width:600px" type="textarea" :rows="10"></el-input>
+      <el-form-item label="内容" prop="content" class="quill-editor-example">
+        <quill-editor v-model="formData.content" style="width:800px ; height: 300px"></quill-editor>
       </el-form-item>
-      <el-form-item label="封面">
+      <el-form-item label="封面" style="margin-top:120px">
         <el-radio-group v-model="formData.cover.type">
           <el-radio :label="1">单图</el-radio>
           <el-radio :label="3">三图</el-radio>
@@ -63,6 +63,15 @@ export default {
     }
   },
   methods: {
+    getAArticle (articleId) {
+      console.log(this.$route.params.articleId)
+      this.$axios({
+        url: `/articles/${articleId}`
+      }).then(res => {
+        console.log(res)
+        this.formData = res.data
+      })
+    },
     submitArticle () {
       this.$refs.articleRules.validate(isOk => {
         if (isOk) {
@@ -88,6 +97,10 @@ export default {
   },
   created () {
     this.getChannels()
+    let { articleId } = this.$route.params
+    if (articleId) {
+      this.getAArticle(articleId)
+    }
   }
 }
 </script>
