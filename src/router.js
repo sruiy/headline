@@ -23,7 +23,10 @@ export default new Router({
       component: Home,
       children: [
         { path: '', component: homeMain },
+        // 发布文章
         { path: 'publish', component: () => import('./views/pubilsh') },
+        // 修改文章
+        { path: 'publish/:articleId', component: () => import('./views/pubilsh') },
         { path: 'articles', component: () => import('./views/articles') },
         { path: 'comment', component: () => import('./views/comment') },
         { path: 'material', component: () => import('./views/material') }
