@@ -55,6 +55,7 @@ export default {
     },
     handleCommandUser (command) {
       if (command === 'account') {
+        this.$router.push('/home/account')
       } else if (command === 'git') {
         window.location.href = 'https://github.com/sruiy'
       } else {
