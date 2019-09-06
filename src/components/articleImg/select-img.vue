@@ -8,7 +8,7 @@
       </el-row>
       <el-row type="flex" justify="center">
         <el-pagination
-        @current-change="pageChange"
+          @current-change="pageChange"
           :current-page="page.page"
           :page-size="page.pageSize"
           background
@@ -17,7 +17,12 @@
         ></el-pagination>
       </el-row>
     </el-tab-pane>
-    <el-tab-pane label="图片上传" name="upload"></el-tab-pane>
+    <el-tab-pane label="图片上传" name="upload">
+      <el-upload :http-request="imgFile" class="avatar-uploader" action :show-file-list="false">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
+    </el-tab-pane>
   </el-tabs>
 </template>
 
@@ -35,6 +40,17 @@ export default {
     }
   },
   methods: {
+    imgFile (params) {
+      let imgData = new FormData()
+      imgData.append('images', params.file)
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data: imgData
+      }).then(res => {
+
+      })
+    },
     selectImg (url) {
       this.$emit('selectImg', url)
     },
@@ -75,5 +91,28 @@ export default {
       height: 100%;
     }
   }
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

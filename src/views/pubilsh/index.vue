@@ -41,7 +41,6 @@
 </template>
 
 <script>
-
 export default {
   data () {
     return {
@@ -57,26 +56,35 @@ export default {
         }
       },
       articleRules: {
-        title: [{
-          required: true,
-          message: '标题不能为空'
-        }],
-        content: [{
-          required: true,
-          message: '内容不能为空'
-        }],
-        channel_id: [{
-          required: true,
-          message: '频道不能为空'
-        }]
+        title: [
+          {
+            required: true,
+            message: '标题不能为空'
+          }
+        ],
+        content: [
+          {
+            required: true,
+            message: '内容不能为空'
+          }
+        ],
+        channel_id: [
+          {
+            required: true,
+            message: '频道不能为空'
+          }
+        ]
       }
     }
   },
   methods: {
     coverImg (url, index) {
-      this.formData.cover.images = this.formData.cover.images.length > 0 ? this.formData.cover.images.map((item, i) => {
-        return i === index ? url : item
-      }) : []
+      this.formData.cover.images =
+        this.formData.cover.images.length > 0
+          ? this.formData.cover.images.map((item, i) =>
+            i === index ? url : item
+          )
+          : []
     },
     selectImg () {
       if (this.formData.cover.type === 1) {
