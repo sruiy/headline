@@ -9,6 +9,7 @@
         action=""
         :http-request="uploadImg"
         :show-file-list="false"
+        v-loading="loading"
       >
         <img :src="formData.photo ? formData.photo : defaultImg" alt />
       </el-upload>
@@ -42,6 +43,7 @@ import eventBus from '../../eventBus/events'
 export default {
   data () {
     return {
+      loading: false,
       defaultImg: require('../../assets/img/pic_bg.png'),
       formData: {
         name: '',
@@ -73,6 +75,7 @@ export default {
   },
   methods: {
     async uploadImg (params) {
+      this.loading = true
       let data = new FormData()
       data.append('photo', params.file)
       await this.$axios({
@@ -80,6 +83,7 @@ export default {
         method: 'patch',
         data
       })
+      this.loading = false
       this.getUserInfo()
     },
     getUserInfo () {

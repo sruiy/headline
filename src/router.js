@@ -10,35 +10,59 @@ import homeMain from './views/home/homemain.vue'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/login',
-      component: Login
+  routes: [{
+    path: '*',
+    component: () => import('./views/404')
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/',
+    redirect: '/home'
+  },
+  {
+    path: '/home',
+    component: Home,
+    children: [{
+      path: '',
+      component: homeMain
     },
-    {
-      path: '/',
-      redirect: '/home'
-    },
-    {
-      path: '/home',
-      component: Home,
-      children: [
-        { path: '', component: homeMain },
-        // 发布文章
-        { path: 'publish', component: () => import('./views/pubilsh') },
-        // 修改文章
-        { path: 'publish/:articleId', component: () => import('./views/pubilsh') },
-        { path: 'articles', component: () => import('./views/articles') },
-        { path: 'comment', component: () => import('./views/comment') },
-        { path: 'material', component: () => import('./views/material') },
-        // { path: 'fansdata', component: homeMain },
-        // { path: 'fansinfo', component: homeMain },
-        // { path: 'fansimg', component: homeMain },
-        // { path: 'fanslist', component: homeMain },
-        { path: 'account', component: () => import('./views/account') }
+    // 发布文章
 
-      ]
+    {
+      path: 'publish',
+      component: () => import('./views/pubilsh')
+    },
+    // 修改文章
+    {
+      path: 'publish/:articleId',
+      component: () => import('./views/pubilsh')
+    },
+    {
+      path: 'articles',
+      component: () => import('./views/articles')
+    },
+    {
+      path: 'comment',
+      component: () => import('./views/comment')
+    },
+    {
+      path: 'material',
+      component: () => import('./views/material')
+    },
+    // { path: 'fansdata', component: homeMain },
+    // { path: 'fansinfo', component: homeMain },
+    // { path: 'fansimg', component: homeMain },
+    // { path: 'fanslist', component: homeMain },
+    {
+      path: 'account',
+      component: () => import('./views/account')
     }
+
+    ]
+  }
 
     // {
     //   path: '/about',
