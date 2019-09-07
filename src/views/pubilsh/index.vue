@@ -44,19 +44,14 @@
 export default {
   data () {
     let imgRule = (rule, value, callback) => {
-      // if (value.type > 0 && !value.images.some((item, i) => !item)) {
-      // if (value.type > 0 && value.images.every((item, i) => item)) {
-      //   callback()
-      // } else {
-      //   callback(new Error('封面图不能为空'))
-      // }
       if (value.type === 1) {
         (value.images.length === 1 && value.images[0]) ? callback() : callback(new Error('单图封面不能为空'))
       } else if (value.type === 3) {
+        //! value.images.some((item, i) => !item))
         (value.images.length === 3 && value.images.every((item, i) => item)) ? callback() : callback(new Error('三图封面不能为空'))
       } else {
         if (value.images.length > 0) {
-          callback(new Error('未知错误'))
+          callback(new Error('封面错误'))
         } else {
           callback()
         }
