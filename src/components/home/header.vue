@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import eventBus from '../../eventBus/events'
 export default {
   data () {
     return {
@@ -63,9 +64,13 @@ export default {
         this.$router.push('/login')
       }
     }
+
   },
   created () {
     this.getUser()
+    eventBus.$on('updataUserInfo', () => {
+      this.getUser()
+    })
   }
 }
 </script>

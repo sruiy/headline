@@ -3,7 +3,23 @@
     <bread-crumb slot="header">
       <template slot="title">账户信息</template>
     </bread-crumb>
-    <el-form style="width: 400px" label-width="80px" :model="formData" :rules="userRules" ref="userInfo">
+    <div class="userImg">
+      <el-upload
+        class="upload-demo"
+        action=""
+        :http-request="uploadImg"
+        :show-file-list="false"
+      >
+        <img :src="formData.photo ? formData.photo : defaultImg" alt />
+      </el-upload>
+    </div>
+    <el-form
+      style="width: 400px"
+      label-width="80px"
+      :model="formData"
+      :rules="userRules"
+      ref="userInfo"
+    >
       <el-form-item label="用户名" prop="name">
         <el-input v-model="formData.name"></el-input>
       </el-form-item>
@@ -22,14 +38,17 @@
 </template>
 
 <script>
+import eventBus from '../../eventBus/events'
 export default {
   data () {
     return {
+      defaultImg: require('../../assets/img/pic_bg.png'),
       formData: {
         name: '',
         intro: '',
         email: '',
-        mobile: ''
+        mobile: '',
+        photo: ''
       },
       userRules: {
         name: [
@@ -44,13 +63,25 @@ export default {
             required: true,
             message: '邮箱不能为空'
           },
-          { pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
-            message: '请输入正确的邮箱' }
+          {
+            pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+            message: '请输入正确的邮箱'
+          }
         ]
       }
     }
   },
   methods: {
+    async uploadImg (params) {
+      let data = new FormData()
+      data.append('photo', params.file)
+      await this.$axios({
+        url: '/user/photo',
+        method: 'patch',
+        data
+      })
+      this.getUserInfo()
+    },
     getUserInfo () {
       this.$axios({
         url: '/user/profile'
@@ -67,6 +98,7 @@ export default {
             data: this.formData
           }).then(res => {
             this.$message({ type: 'success', message: '修改成功' })
+            eventBus.$emit('updataUserInfo')
           })
         }
       })
@@ -78,5 +110,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.userImg {
+  position: absolute;
+  margin-left: 500px;
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+}
 </style>
