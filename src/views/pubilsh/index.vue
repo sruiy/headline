@@ -16,7 +16,7 @@
       <el-form-item label="内容" prop="content" class="quill-editor-example">
         <quill-editor v-model="formData.content" style="width:800px ; height: 300px"></quill-editor>
       </el-form-item>
-      <el-form-item label="封面" style="margin-top:120px">
+      <el-form-item label="封面" style="margin-top:120px" prop="cover">
         <el-radio-group v-model="formData.cover.type" @change="selectImg">
           <el-radio :label="1">单图</el-radio>
           <el-radio :label="3">三图</el-radio>
@@ -43,7 +43,27 @@
 <script>
 export default {
   data () {
+    let imgRule = (rule, value, callback) => {
+      // if (value.type > 0 && !value.images.some((item, i) => !item)) {
+      // if (value.type > 0 && value.images.every((item, i) => item)) {
+      //   callback()
+      // } else {
+      //   callback(new Error('封面图不能为空'))
+      // }
+      if (value.type === 1) {
+        (value.images.length === 1 && value.images[0]) ? callback() : callback(new Error('单图封面不能为空'))
+      } else if (value.type === 3) {
+        (value.images.length === 3 && value.images.every((item, i) => item)) ? callback() : callback(new Error('三图封面不能为空'))
+      } else {
+        if (value.images.length > 0) {
+          callback(new Error('未知错误'))
+        } else {
+          callback()
+        }
+      }
+    }
     return {
+
       textarea: '',
       channels: [],
       formData: {
@@ -73,19 +93,21 @@ export default {
             required: true,
             message: '频道不能为空'
           }
-        ]
+        ],
+        cover: [{
+          validator: imgRule
+        }]
       }
     }
   },
   methods: {
     coverImg (url, index) {
       this.formData.cover.images =
-        this.formData.cover.images.length > 0
-          ? this.formData.cover.images.map((item, i) =>
-            i === index ? url : item
-          )
-          : []
+     this.formData.cover.images.map((item, i) =>
+       i === index ? url : item
+     )
     },
+    // 根据type设置数组
     selectImg () {
       if (this.formData.cover.type === 1) {
         this.formData.cover.images = ['']

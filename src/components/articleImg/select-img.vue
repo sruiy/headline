@@ -42,13 +42,14 @@ export default {
   methods: {
     imgFile (params) {
       let imgData = new FormData()
-      imgData.append('images', params.file)
+      imgData.append('image', params.file)
       this.$axios({
         url: '/user/images',
         method: 'post',
         data: imgData
       }).then(res => {
-
+        // console.log(res)
+        this.$emit('selectImg', res.data.url)
       })
     },
     selectImg (url) {
