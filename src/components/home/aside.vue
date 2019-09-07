@@ -2,7 +2,7 @@
   <div id="aside">
     <!--侧边栏logo-->
     <div class="aside-logo">
-      <img src="../../assets/img/logo_admin.png" alt />
+      <img :src="!collapse ? BigImg :smallImg" :style="{width:!collapse?'100px':'30px'}" alt />
     </div>
     <el-menu
       class="el-menu-vertical-demo aside"
@@ -10,6 +10,8 @@
       text-color="#adafb5"
       active-text-color="#ffd04b"
       router
+      :collapse="collapse"
+
     >
       <el-menu-item index="/">
         <i class="el-icon-s-home"></i>
@@ -47,16 +49,30 @@
 </template>
 
 <script>
-export default {}
+import eventBus from '../../eventBus/events'
+export default {
+  data () {
+    return {
+      collapse: false,
+      BigImg: require('../../assets/img/logo_admin.png'),
+      smallImg: require('../../assets/img/toutiao.png')
+    }
+  },
+  created () {
+    eventBus.$on('closeOrOpen', status => {
+      this.collapse = status
+    })
+  }
+}
 </script>
 
 <style lang="less" scoped>
 #aside {
-  width: 200px;
-  background-color: #2e2f32;
   .aside-logo {
+     background-color: #2e2f32;
     text-align: center;
     padding: 15px 0;
+
     img {
       width: 100px;
     }

@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside style="width:200px; background-color:#323745">
+    <el-aside :style="{width:status?'60px':'200px'}" style="width:200px; background-color:#323745; transition:0.3s">
       <home-aside></home-aside>
     </el-aside>
     <!--头部-->
@@ -17,8 +17,18 @@
 </template>
 
 <script>
+import eventBus from '../../eventBus/events'
 export default {
-
+  data () {
+    return {
+      status: false
+    }
+  },
+  created () {
+    eventBus.$on('closeOrOpen', status => {
+      this.status = status
+    })
+  }
 }
 </script>
 

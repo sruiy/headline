@@ -11,7 +11,7 @@
         :show-file-list="false"
         v-loading="loading"
       >
-        <img :src="formData.photo ? formData.photo : defaultImg" alt />
+        <img :src="formData.photo ||defaultImg " alt />
       </el-upload>
     </div>
     <el-form

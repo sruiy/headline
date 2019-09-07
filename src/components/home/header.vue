@@ -2,7 +2,7 @@
   <el-row type="flex" justify="space-between">
     <el-col :span="8">
       <div class="grid-content bg-purple header-left">
-        <span class="el-icon-s-fold"></span>
+        <span :class="!collapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'" @click="closeOrOpen"></span>
         江苏传智播客教育科技股份有限公司
       </div>
     </el-col>
@@ -30,6 +30,7 @@ import eventBus from '../../eventBus/events'
 export default {
   data () {
     return {
+      collapse: false,
       userData: {
         name: '',
         photo: ''
@@ -38,21 +39,19 @@ export default {
     }
   },
   methods: {
+    closeOrOpen () {
+      this.collapse = !this.collapse
+      eventBus.$emit('closeOrOpen', this.collapse)
+    },
     getUser () {
       // let token = window.localStorage.getItem('token')
       //   console.log(token)
       this.$axios({
         url: '/user/profile'
-        // headers: {
-        //   Authorization: `Bearer ${token}`
-        // }
       })
         .then(res => {
           this.userData = res.data
         })
-        // .catch(err => {
-        //   console.log(err)
-        // })
     },
     handleCommandUser (command) {
       if (command === 'account') {
